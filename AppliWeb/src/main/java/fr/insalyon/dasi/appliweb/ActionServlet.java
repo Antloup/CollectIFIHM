@@ -40,26 +40,15 @@ public class ActionServlet extends HttpServlet {
         String todo = request.getParameter("todo");
         if(todo != null){       
         switch(todo){
-            case "ListeEvenements":{
+            case "Accueil":{
                 Action action = new ListeEvenementsAction();
-                action.execute(request);
-                this.getServletContext().getRequestDispatcher("/EventsList.jsp").forward(request, response);
-                //RequestDispatcher rd = request.getRequestDispatcher("/ServletVueEtudiant");
-                //rd.forward(request, response);
-//                response.setContentType("text/html;charset=UTF-8");
-//                try (PrintWriter out = response.getWriter()) {
-//                    out.println("<!DOCTYPE html>");
-//                    out.println("<html>");
-//                    out.println("<head>");
-//                    out.println("<title>Servlet ActionServlet</title>");            
-//                    out.println("</head>");
-//                    out.println("<body>");
-//                    out.println("<h1>Servlet ActionServlet at " + request.getRequestURI()+ "</h1>");
-//                    out.println(request.getAttribute("ListActivite"));
-//                    out.println("ListeEvenements");
-//                    out.println("</body>");
-//                    out.println("</html>");
-//                }
+//                this.getServletContext().getRequestDispatcher("/AccueilUtilisateurs.html").forward(request, response);
+//                RequestDispatcher rd = request.getRequestDispatcher("/ServletVueEtudiant");
+//                rd.forward(request, response);
+                response.setContentType("text/html;charset=UTF-8");
+                try (PrintWriter out = response.getWriter()) {
+                    out.println(action.execute(request));
+                }
                 break;
             }
             

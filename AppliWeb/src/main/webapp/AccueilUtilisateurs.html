@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="//code.jquery.com/jquery-1.12.1.min.js"></script>
+    </head>
+    <body>
+        <h2 id="evenements"></h2>
+        <script>
+            $(function() {
+                $.ajax({
+                    url: "./ActionServlet",
+                    type: "POST",
+                    data: {
+                        action : "Acceuil",
+                        id: window.location.search.substring(1) // URL.html?<id>
+                    },
+                    dataType: "json"
+                })
+                .done(function(data) {
+                    var activite = data.activite;
+                    $("input[name=activite]").val(activite.id);
+                    $("#nom").html(activite.denomination);
+                    $("#nb_participants").html(activite.nb_participants);
+                    $("#payant").html(activite.payant);
+                    var listeEvenements = $("#evenements");
+                    listeEvenements.append("id:"+activite.id+", nom:"+activite.denomination);
+                })
+                .fail(function() {
+                    $("#nom").html("ERREUR");
+                })
+                .always(function() {
+                });
+            });
+        </script>
+    </body>
+</html>
