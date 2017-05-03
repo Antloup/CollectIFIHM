@@ -1,11 +1,93 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Start Page</title>
+        <title>CollectIF</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <!-- Compiled and minified CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+
+        <!-- Compiled and minified JavaScript -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     </head>
     <body>
-        <h1>Hello World!</h1>
-        <a href="ActionServlet?todo=Accueil">Voir la liste</a>
+        <div class ="navbar-fixed">
+            <nav>
+                <div class="nav-wrapper">
+                    <a class="brand-logo center" href="#">CollectIF</a>
+                    <ul id="nav-mobile" class="right hide-on-med-and-down">
+                        <li><a href="Connexion.html">Connexion</a></li>
+                        <li class="active"><a href="#">Inscription</a></li>
+                    </ul>
+                </div>
+
+
+            </nav>
+
+        </div>  
+        <div class="row">
+            <div class="col s6">
+                <h2>Connexion</h2>
+                <a class="waves-effect waves-light btn-large">Connexion</a>
+            </div>
+            <div class="col s6">
+                <h2>Inscription</h2>
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <input id="icon_prefix" type="text" class="validate">
+                            <label for="icon_prefix">Nom</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <input id="icon_telephone" type="text" class="validate">
+                            <label for="icon_telephone">Prenom</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <input id="icon_telephone" type="email" class="validate">
+                            <label for="icon_telephone">Email</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <a class="waves-effect waves-light btn-large" onclick="Inscription()">Inscription</a>
+                    </div>
+
+            </div>
+        </div>
+        
+        
+        <script>
+            $(document).ready(function() {
+                $.ajax({
+                    url: "./ActionServlet",
+                    type: "POST",
+                    data: {
+                        action : "Inscription",
+                        id: window.location.search.substring(1), // URL.html?<id>
+                        nom: $("#nom"),
+                        prenom: $("#prenom"),
+                        email: $("#email"),
+                        adresse: $("#adresse")
+                    },
+                    dataType: "json"
+                })
+                .done(function(data) {
+                    console.log(data);
+                    // Si c'est ok : Redirection Page accueil
+                })
+                .fail(function() {
+                    $("#nom").html("ERREUR");
+                    console.log("fail");
+                    // Gérer erreur
+                })
+                .always(function() {
+                    console.log("always");
+                });
+            });
+        </script>
+
+        <!-- <a href="AccueilUtilisateurs.html">Voir la liste</a> -->
     </body>
 </html>

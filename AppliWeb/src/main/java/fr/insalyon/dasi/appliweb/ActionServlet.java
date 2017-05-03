@@ -37,12 +37,12 @@ public class ActionServlet extends HttpServlet {
             throws ServletException, IOException {
         
         
-        String todo = request.getParameter("todo");
+        String todo = request.getParameter("action");
         if(todo != null){       
         switch(todo){
-            case "Accueil":{
+            case "getListeEvenements":{
                 Action action = new ListeEvenementsAction();
-//                this.getServletContext().getRequestDispatcher("/AccueilUtilisateurs.html").forward(request, response);
+                //this.getServletContext().getRequestDispatcher("/AccueilUtilisateurs.html").forward(request, response);
 //                RequestDispatcher rd = request.getRequestDispatcher("/ServletVueEtudiant");
 //                rd.forward(request, response);
                 response.setContentType("text/html;charset=UTF-8");
@@ -52,6 +52,10 @@ public class ActionServlet extends HttpServlet {
                 break;
             }
             
+            case "Inscription":{
+                //Action action = new inscriptionAction();
+                
+            }
             default:{
                 response.setContentType("text/html;charset=UTF-8");
                 try (PrintWriter out = response.getWriter()) {
@@ -62,7 +66,7 @@ public class ActionServlet extends HttpServlet {
                     out.println("<title>Servlet ActionServlet</title>");            
                     out.println("</head>");
                     out.println("<body>");
-                    out.println("<h1>Servlet ActionServlet at " + request.getRequestURI()+ "</h1>");
+                    out.println("<h1>Servlet ActionServlet at " + request.getRequestURI() + "</h1>");
                     out.println("Default");
                     out.println("<a href=\"ActionServlet?todo=ListeEvenements\">Voir la liste</a>");
                     out.println("</body>");
