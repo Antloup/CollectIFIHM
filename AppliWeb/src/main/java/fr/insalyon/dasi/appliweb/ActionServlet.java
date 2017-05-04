@@ -7,6 +7,8 @@ package fr.insalyon.dasi.appliweb;
  */
 
 import actions.Action;
+import actions.ConnexionAction;
+import actions.InscriptionAction;
 import actions.ListeEvenementsAction;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -45,7 +47,8 @@ public class ActionServlet extends HttpServlet {
                 //this.getServletContext().getRequestDispatcher("/AccueilUtilisateurs.html").forward(request, response);
 //                RequestDispatcher rd = request.getRequestDispatcher("/ServletVueEtudiant");
 //                rd.forward(request, response);
-                response.setContentType("text/html;charset=UTF-8");
+                //response.setContentType("text/html;charset=UTF-8");
+                response.setContentType("application/json");
                 try (PrintWriter out = response.getWriter()) {
                     out.println(action.execute(request));
                 }
@@ -53,26 +56,19 @@ public class ActionServlet extends HttpServlet {
             }
             
             case "Inscription":{
-                //Action action = new inscriptionAction();
-                
-            }
-            default:{
-                response.setContentType("text/html;charset=UTF-8");
+                Action action = new InscriptionAction();
+                response.setContentType("application/json");
                 try (PrintWriter out = response.getWriter()) {
-                    /* TODO output your page here. You may use following sample code. */
-                    out.println("<!DOCTYPE html>");
-                    out.println("<html>");
-                    out.println("<head>");
-                    out.println("<title>Servlet ActionServlet</title>");            
-                    out.println("</head>");
-                    out.println("<body>");
-                    out.println("<h1>Servlet ActionServlet at " + request.getRequestURI() + "</h1>");
-                    out.println("Default");
-                    out.println("<a href=\"ActionServlet?todo=ListeEvenements\">Voir la liste</a>");
-                    out.println("</body>");
-                    out.println("</html>");
+                    out.println(action.execute(request));
                 }
-                break;
+            }
+            
+            case "Connexion":{
+                Action action = new ConnexionAction();
+                response.setContentType("application/json");
+                try (PrintWriter out = response.getWriter()) {
+                    out.println(action.execute(request));
+                }
             }
             
         }

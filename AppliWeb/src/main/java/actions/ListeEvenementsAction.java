@@ -13,6 +13,8 @@ import dao.JpaUtil;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import metier.modele.Activite;
+import metier.modele.DemandeEvenement;
+import metier.modele.Evenement;
 import metier.modele.Lieu;
 import metier.service.ServiceMetier;
 
@@ -27,11 +29,11 @@ public class ListeEvenementsAction extends Action{
         ServiceMetier sm = new ServiceMetier();
         JpaUtil.init();
         
-        List<Activite> la = sm.obtenirActivites();
+        List<DemandeEvenement> le = sm.obtenirDemandesFuturesNonComplet();
         
         
-        if(la != null){
-            request.setAttribute("ListActivite", la);
+        if(le != null){
+            request.setAttribute("ListActivite", le);
         }
         else{
             request.setAttribute("ListActivite", "NULL");
@@ -39,13 +41,15 @@ public class ListeEvenementsAction extends Action{
         
         JsonArray jsonListe = new JsonArray();
         
-        for (Activite a : la) {
+        for (DemandeEvenement de : le) {
             JsonObject jsonActivite = new JsonObject();
             
-            jsonActivite.addProperty("id", a.getId());
-            jsonActivite.addProperty("denomination", a.getDenomination());
-            jsonActivite.addProperty("nb_participants", a.getNbParticipants());
-            jsonActivite.addProperty("payant", a.getPayant());
+            jsonActivite.addProperty("id", de.getId());
+            jsonActivite.addProperty("denomination", de.getActivity().getDenomination());
+            jsonActivite.addProperty("date", de.getDate().toString());
+            jsonActivite.addProperty("moment", de.getDay_moment().toString());
+            //jsonActivite.addProperty("tarif", de.getTarif());
+            jsonActivite.addProperty("nb_participants", de.getListSize());
             //missing getMoment(), getDate(), getNbParticipantsInscrits()
             
             jsonListe.add(jsonActivite);
