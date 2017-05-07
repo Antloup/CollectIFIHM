@@ -77,6 +77,21 @@ public class ServiceMetier {
         }
         return r;
     }
+    
+    // RAJOUTER
+    public Activite obtenirActivite(long id) {
+        ActiviteDAO mon_activite_dao = new ActiviteDAO();
+        Activite r = null;
+        try {
+            JpaUtil.creerEntityManager();
+            r = mon_activite_dao.findById(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            JpaUtil.fermerEntityManager();
+        }
+        return r;
+    }
 
     public List<Lieu> obtenirLieux() {
         LieuDAO mon_lieu_dao = new LieuDAO();
