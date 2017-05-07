@@ -12,36 +12,29 @@ import com.google.gson.JsonObject;
 import dao.JpaUtil;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import metier.modele.Activite;
+import metier.modele.Adherent;
 import metier.modele.DemandeEvenement;
-import metier.modele.Evenement;
-import metier.modele.Lieu;
 import metier.service.ServiceMetier;
 
 /**
  *
  * @author Anthony
  */
-public class ListeEvenementsAction extends Action{
+public class HistoriqueAction extends Action{
 
     @Override
     public String execute(HttpServletRequest request) {
         ServiceMetier sm = new ServiceMetier();
         JpaUtil.init();
-        
-        List<DemandeEvenement> le = sm.obtenirDemandesFuturesNonComplet();
-        
-        if(le != null){
-            request.setAttribute("ListActivite", le);
-        }
-        else{
-            request.setAttribute("ListActivite", "NULL");
-        }
+        HttpSession session = request.getSession();
+        Adherent adherent = sm.connexion((String)session.getAttribute("Email"));
+        List<DemandeEvenement> lde = sm.obtenirDemandesPerso(adherent, false);
         
         JsonArray jsonListe = new JsonArray();
-        
-        for (DemandeEvenement de : le) {
-            
+
+        for (DemandeEvenement de : lde) {
             JsonObject jsonActivite = new JsonObject();
             
             jsonActivite.addProperty("id", de.getId());
@@ -50,10 +43,15 @@ public class ListeEvenementsAction extends Action{
             jsonActivite.addProperty("moment", de.getDay_moment().toString());
             jsonActivite.addProperty("tarif", de.getActivity().getPayant());
             jsonActivite.addProperty("nb_participants", de.getListSize());
-            
+            if(de.getEvent() != null){
+                jsonActivite.addProperty("etat", de.getEvent().isValidated());
+            }
+            else{
+                jsonActivite.addProperty("etat", "NULL");
+            }
             jsonListe.add(jsonActivite);
         }
-        
+
         //Objet JSON "conteneur"
         JsonObject container = new JsonObject();
         container.add("activites", jsonListe);
@@ -61,11 +59,8 @@ public class ListeEvenementsAction extends Action{
         //Serialisation & Ecriture sur le flux de sortie
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String json = gson.toJson(container);
-        
         JpaUtil.destroy();
-        
         return json;
-        
     }
     
 }

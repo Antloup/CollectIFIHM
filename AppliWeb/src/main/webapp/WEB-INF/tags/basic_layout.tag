@@ -21,14 +21,14 @@
         <!--Import Google Icon Font-->
         <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <!--Import materialize.css-->
-        <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+        <link type="text/css" rel="stylesheet" href="css/materialize.css"  media="screen,projection"/>
 
         <!--Let browser know website is optimized for mobile-->
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <script src="https://www.w3schools.com/lib/w3data.js"></script>
         
         <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-        <script type="text/javascript" src="js/materialize.min.js"></script>
+        <script type="text/javascript" src="js/materialize.js"></script>
     </head>
     <body>
         
@@ -38,14 +38,14 @@
                 <div class="nav-wrapper">
                     <a class="brand-logo center" href="#">${title}</a>
                     <ul id="nav-mobile" class="right hide-on-med-and-down">
-                        <li id="connexion-link" class="${nav_connexion}${nav_disconnected}"><a href="connexion.jsp">Connexion</a></li>
-                        <li id="inscription-link" class="${nav_inscription}${nav_disconnected}"><a href="index.jsp">Inscription</a></li>
+                        <li id="connexion-link" class="${nav_connexion} ${nav_disconnected}"><a href="connexion.jsp">Connexion</a></li>
+                        <li id="inscription-link" class="${nav_inscription} ${nav_disconnected}"><a href="index.jsp">Inscription</a></li>
                         <li id="inscription-link" class='${nav_connected}'><a href="index.jsp">Déconnexion</a></li>
                     </ul>
                     <ul id="nav-mobile" class="left hide-on-med-and-down">
-                        <li id="inscription-link" class="${nav_preparation}${nav_connected}"><a href="accueil.jsp">Evenement en préparation</a></li>
-                        <li id="inscription-link" class="${nav_demander}${nav_connected}"><a href="demande.jsp">Demander un evenement</a></li>
-                        <li id="inscription-link" class="${nav_historique}${nav_connected}"><a href="historique.jsp">Mon historique</a></li>
+                        <li id="inscription-link" class="${nav_preparation} ${nav_connected}"><a href="accueil.jsp">Evenement en préparation</a></li>
+                        <li id="inscription-link" class="${nav_demander} ${nav_connected}"><a href="demande.jsp">Demander un evenement</a></li>
+                        <li id="inscription-link" class="${nav_historique} ${nav_connected}"><a href="historique.jsp">Mon historique</a></li>
                     </ul>
                 </div>
             </nav>
@@ -71,5 +71,43 @@
                 </div>
             </div>
         </footer>
+        
+        <!-- Script recherche-->
+        <script>
+            $(document).ready(function () {
+                $(document).keypress(function (e) {
+                    if (e.which == 13) {
+                        e.preventDefault();
+                        search();
+                    }
+                });
+            });
+        </script>
+        <script>
+            function search() {
+                if($("#search") != null){
+                    var recherche = $("#search").val();
+                    window.location.href = location.protocol + '//' + location.host + location.pathname + "?search=" + recherche;
+                }
+                
+            }
+        </script>
+
+        <script>
+            var getUrlParameter = function getUrlParameter(sParam) {
+                var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+                        sURLVariables = sPageURL.split('&'),
+                        sParameterName,
+                        i;
+
+                for (i = 0; i < sURLVariables.length; i++) {
+                    sParameterName = sURLVariables[i].split('=');
+
+                    if (sParameterName[0] === sParam) {
+                        return sParameterName[1] === undefined ? true : sParameterName[1];
+                    }
+                }
+            };
+        </script>
     </body>
 </html>

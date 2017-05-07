@@ -42,11 +42,11 @@
                 .done(function(data) {
                     //console.log(data);
                     if(data.Connexion=="OK"){
-                        console.log("Connexion OK")
+                        console.log("Connexion OK");
                         window.location.href = "accueil.jsp";
                     }
                     else{
-                        console.log("Erreur Connexion")
+                        console.log("Erreur Connexion");
                         Materialize.toast('Adresse incorrect', 4000);
                     }
                     // Si c'est ok : Redirection Page accueil
