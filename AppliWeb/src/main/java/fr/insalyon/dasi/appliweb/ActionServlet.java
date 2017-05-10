@@ -5,11 +5,14 @@ package fr.insalyon.dasi.appliweb;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 import actions.Action;
+import actions.ActivitesAction;
 import actions.ConnexionAction;
+import actions.HistoriqueAction;
 import actions.InscriptionAction;
+import actions.InsertDemandeAction;
 import actions.ListeEvenementsAction;
+import actions.MomentsAction;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
@@ -23,7 +26,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Anthony
  */
-@WebServlet(name = "ActionServlet",urlPatterns = {"/ActionServlet"})
+@WebServlet(name = "ActionServlet", urlPatterns = {"/ActionServlet"})
 public class ActionServlet extends HttpServlet {
 
     /**
@@ -37,44 +40,64 @@ public class ActionServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        
+
         String todo = request.getParameter("action");
-        if(todo != null){       
-        switch(todo){
-            case "getListeEvenements":{
-                Action action = new ListeEvenementsAction();
-                //this.getServletContext().getRequestDispatcher("/AccueilUtilisateurs.html").forward(request, response);
+        if (todo != null) {
+            Action action = null;
+            switch (todo) {
+                case "getListeEvenements": {
+                    action = new ListeEvenementsAction();
+                    //this.getServletContext().getRequestDispatcher("/AccueilUtilisateurs.html").forward(request, response);
 //                RequestDispatcher rd = request.getRequestDispatcher("/ServletVueEtudiant");
 //                rd.forward(request, response);
-                //response.setContentType("text/html;charset=UTF-8");
+                    //response.setContentType("text/html;charset=UTF-8");
+                    break;
+                }
+
+                case "Inscription": {
+                    action = new InscriptionAction();
+                    break;
+                }
+
+                case "Connexion": {
+                    action = new ConnexionAction();
+                    break;
+                }
+
+                case "getHistorique": {
+                    action = new HistoriqueAction();
+                    break;
+                }
+
+                case "getActivites": {
+                    action = new ActivitesAction();
+                    break;
+                }
+
+                case "getMoments": {
+                    action = new MomentsAction();
+                    break;
+                }
+
+                case "insertDemande": {
+                    action = new InsertDemandeAction();
+                    break;
+                }
+
+                case "getListeDemandes": {
+                    break;
+                }
+
+            }
+            if (action != null) {
                 response.setContentType("application/json");
                 try (PrintWriter out = response.getWriter()) {
                     out.println(action.execute(request));
                 }
-                break;
             }
-            
-            case "Inscription":{
-                Action action = new InscriptionAction();
-                response.setContentType("application/json");
-                try (PrintWriter out = response.getWriter()) {
-                    out.println(action.execute(request));
-                }
-            }
-            
-            case "Connexion":{
-                Action action = new ConnexionAction();
-                response.setContentType("application/json");
-                try (PrintWriter out = response.getWriter()) {
-                    out.println(action.execute(request));
-                }
-            }
-            
+
         }
-        }
-        
-        
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

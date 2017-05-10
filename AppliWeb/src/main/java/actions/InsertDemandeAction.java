@@ -12,6 +12,7 @@ import dao.JpaUtil;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import metier.modele.Activite;
@@ -49,7 +50,15 @@ public class InsertDemandeAction extends Action{
                 e.printStackTrace();
             }
             long activite_id = Long.parseLong((String)request.getParameter("activite"));
-            Activite activite = sm.obtenirActivite(activite_id);
+            List<Activite> activites = sm.obtenirActivites();
+            Activite activite = null;
+            for(Activite act : activites){
+                if(act.getId() == activite_id){
+                    activite = act;
+                    break;
+                }
+            }
+
             int int_moment = Integer.parseInt((String)request.getParameter("moment"));
             Moment moment = null;
             switch(int_moment){

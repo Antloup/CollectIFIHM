@@ -26,10 +26,9 @@ public class ListeEvenementsAction extends Action{
 
     @Override
     public String execute(HttpServletRequest request) {
-        ServiceMetier sm = new ServiceMetier();
         JpaUtil.init();
-        
-        List<DemandeEvenement> le = sm.obtenirDemandesFuturesNonComplet();
+        ServiceMetier sm = new ServiceMetier();
+        List<DemandeEvenement> le = sm.obtenirDemandesFuturesNonComplet(); // TODO : a modifier, ca doit etre le commande complete.
         
         if(le != null){
             request.setAttribute("ListActivite", le);
