@@ -62,7 +62,8 @@
                                 listeEvenements.append("<td>" + activite.denomination + "</td>");
                                 listeEvenements.append("<td>" + activite.date + "</td>");
                                 listeEvenements.append("<td>" + activite.moment + "</td>");
-                                listeEvenements.append("<td>" + activite.denomination + "</td>");
+                                var payant = activite.payant ? "Payant":"Gratuit";
+                                listeEvenements.append("<td>" + payant + "</td>");
                                 listeEvenements.append("<td><a href='valider.jsp?id="+activite.id+"'>Valider</a></td>");
                                 listeEvenements.append("</tr>");
                                 }

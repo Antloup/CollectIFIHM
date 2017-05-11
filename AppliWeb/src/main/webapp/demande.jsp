@@ -119,7 +119,7 @@
                             var select_activite = $("#select-activite");
                             select_activite.empty();
                             $.each(activites, function (i, activite) {
-                                select_activite.append("<option value=\"" + activite.id + "\">" + activite.denomination + "</option");
+                                select_activite.append("<option value=\"" + activite.id + "\">" + activite.denomination + "</option>");
                             })
                             if (activites.length == 0) {
                                 select_activite.append("<option value=\"\" disabled selected>Pas d'activitée</option>");

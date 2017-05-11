@@ -86,9 +86,14 @@
                                     listeEvenements.append("<td>" + activite.denomination + "</td>");
                                     listeEvenements.append("<td>" + activite.date + "</td>");
                                     listeEvenements.append("<td>" + activite.moment + "</td>");
-                                    listeEvenements.append("<td>" + activite.denomination + "</td>");
-                                    listeEvenements.append("<td>" + activite.nb_participants + "</td>");
-                                    listeEvenements.append("<td>" + activite.etat + "</td>");
+                                    var payant = activite.payant ? "Payant":"Gratuit";
+                                    listeEvenements.append("<td>" + payant + "</td>");
+                                    listeEvenements.append("<td>" + activite.nb_participants + "/" + activite.nb_max + "</td>");
+                                    var etat;
+                                    if(activite.etat==false)    etat = "En cours de validation";
+                                    else if(activite.etat=="NULL")    etat = "-";
+                                    else etat = "validé";
+                                    listeEvenements.append("<td>" + etat + "</td>");
                                     listeEvenements.append("</tr>");
                                 }
                             })
