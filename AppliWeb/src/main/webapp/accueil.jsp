@@ -89,7 +89,7 @@
                                     listeEvenements.append("<td>" + activite.date + "</td>");
                                     listeEvenements.append("<td>" + activite.moment + "</td>");
                                     listeEvenements.append("<td>" + activite.denomination + "</td>");
-                                    listeEvenements.append("<td>" + activite.nb_participants + "</td>");
+                                    listeEvenements.append("<td>" + activite.nb_participants + "/" + activite.nb_max + "</td>");
                                     listeEvenements.append("</tr>");
                                 }
                             })

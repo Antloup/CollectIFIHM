@@ -49,6 +49,7 @@ public class ListeEvenementsAction extends Action{
             jsonActivite.addProperty("moment", de.getDay_moment().toString());
             jsonActivite.addProperty("tarif", de.getActivity().getPayant());
             jsonActivite.addProperty("nb_participants", de.getListSize());
+            jsonActivite.addProperty("nb_max", de.getActivity().getNbParticipants());
             
             jsonListe.add(jsonActivite);
         }
