@@ -37,7 +37,7 @@ public class InsertDemandeAction extends Action{
         DemandeEvenement result =  null;
         JsonObject jsonResponse = new JsonObject();
         if(adherent != null){
-            SimpleDateFormat formatter = new SimpleDateFormat("dd-mm-yyyy");
+            SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
             Date date = null;
             try {
                 System.out.println("DATE:"+(String)request.getParameter("date"));
@@ -83,11 +83,12 @@ public class InsertDemandeAction extends Action{
             result = sm.nouvelleDemandeEvenement(date, moment, activite, adherent);
         }
         
-        
         if(result == null){ // Demande pas OK
+            System.out.println("KO");
             jsonResponse.addProperty("Demande", "KO");
         }
         else{
+            System.out.println("OK");
             jsonResponse.addProperty("Demande", "OK");
         }
         
