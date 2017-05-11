@@ -17,7 +17,7 @@
                     <div class="nav-wrapper">
                         <form>
                             <div class="input-field">
-                                <input id="search" type="search" required>
+                                <input id="search" type="search" required class="autocomplete">
                                 <label class="label-icon" for="search"><i class="material-icons" onclick="search();">search</i></label>
                                 <i class="material-icons" >close</i>
                             </div>
@@ -66,11 +66,14 @@
                         action: "getListeEvenements",
                         id: window.location.search.substring(1) // URL.html?<id>
                     },
-                    dataType: "json"
+                    dataType: "json",
+                    success: function (data) {
+                        getActivite();
+                    }
                 })
                         .done(function (data) {
                             var recherche = getUrlParameter('search');
-                            if(recherche != null){
+                            if (recherche != null) {
                                 $("#search").val(recherche);
                             }
                             console.log(data);
@@ -79,15 +82,15 @@
                             var listeEvenements = $("#dataEvenements");
                             listeEvenements.empty();
                             $.each(activites, function (i, activite) {
-                                if(recherche == null || activite.denomination.search( recherche )>=0){
+                                if (recherche == null || activite.denomination.search(recherche) >= 0) {
                                     // Si pas de recherche ou que denomination correspond a recherche
-                                listeEvenements.append("<tr>");
-                                listeEvenements.append("<td>" + activite.denomination + "</td>");
-                                listeEvenements.append("<td>" + activite.date + "</td>");
-                                listeEvenements.append("<td>" + activite.moment + "</td>");
-                                listeEvenements.append("<td>" + activite.denomination + "</td>");
-                                listeEvenements.append("<td>" + activite.nb_participants + "</td>");
-                                listeEvenements.append("</tr>");
+                                    listeEvenements.append("<tr>");
+                                    listeEvenements.append("<td>" + activite.denomination + "</td>");
+                                    listeEvenements.append("<td>" + activite.date + "</td>");
+                                    listeEvenements.append("<td>" + activite.moment + "</td>");
+                                    listeEvenements.append("<td>" + activite.denomination + "</td>");
+                                    listeEvenements.append("<td>" + activite.nb_participants + "</td>");
+                                    listeEvenements.append("</tr>");
                                 }
                             })
                             if (activites.length == 0) {
@@ -105,7 +108,48 @@
             });
         </script>
 
-        
+        <script>
+            function getActivite(){
+                // getActivites
+                $.ajax({
+                    url: "./ActionServlet",
+                    type: "POST",
+                    data: {
+                        action: "getActivites"
+                    },
+                    dataType: "json"
+                })
+                        .done(function (data) {
+
+                            console.log(data);
+                            var activites = data.activites;
+                            console.log(activites);
+                            var dateActivite = {};
+                            $.each(activites, function (i, activite) {
+                                dateActivite[activite.denomination] = null;
+                            })
+                            console.log("done");
+                            $('input.autocomplete').autocomplete({
+                                data: dateActivite,
+                                limit: 5, // The max amount of results that can be shown at once. Default: Infinity.
+                                onAutocomplete: function (val) {
+                                    search();
+                                },
+                                minLength: 1, // The minimum length of the input for the autocomplete to start. Default: 1.
+                            });
+                            console.log($('input.autocomplete').data);
+                        })
+                        .fail(function () {
+                            console.log("fail");
+                        })
+                        .always(function () {
+                            console.log("always");
+                        });
+            }
+
+        </script>
+
+
     </jsp:attribute>
 
 </t:basic_layout>

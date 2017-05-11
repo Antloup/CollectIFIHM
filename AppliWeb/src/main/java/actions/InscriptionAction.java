@@ -36,6 +36,7 @@ public class InscriptionAction extends Action{
             jsonResponse.addProperty("Inscription", "OK");
             HttpSession session = request.getSession();
             session.setAttribute( "Id", adherent.getId() );
+            session.setAttribute( "Email", adherent.getMail());
         }
         
         //Serialisation & Ecriture sur le flux de sortie
