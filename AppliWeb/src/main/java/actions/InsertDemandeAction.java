@@ -31,7 +31,7 @@ public class InsertDemandeAction extends Action{
     public String execute(HttpServletRequest request) {
         System.out.println("\n\n-----------------Demande-------------\n\n");
         ServiceMetier sm = new ServiceMetier();
-        JpaUtil.init();
+
         HttpSession session = request.getSession();
         Adherent adherent = sm.connexion((String)session.getAttribute("Email"));
         DemandeEvenement result =  null;
@@ -95,7 +95,6 @@ public class InsertDemandeAction extends Action{
         //Serialisation & Ecriture sur le flux de sortie
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String json = gson.toJson(jsonResponse);
-        JpaUtil.destroy();
         return json;
     }
     

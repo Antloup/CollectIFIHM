@@ -24,7 +24,7 @@ public class ListeAdminAction extends Action{
 
     @Override
     public String execute(HttpServletRequest request) {
-        JpaUtil.init();
+
         ServiceMetier sm = new ServiceMetier();
         List<Evenement> le = sm.obtenirEvenementAValider(); // TODO : a modifier, ca doit etre le commande complete.
         
@@ -49,9 +49,8 @@ public class ListeAdminAction extends Action{
                 jsonActivite.addProperty("denomination", de.getDemandeAboutie().getActivity().getDenomination());
                 jsonActivite.addProperty("date", de.getDemandeAboutie().getDate().toString());
                 jsonActivite.addProperty("moment", de.getDemandeAboutie().getDay_moment().toString());
-                jsonActivite.addProperty("tarif", de.getDemandeAboutie().getActivity().getPayant());
                 jsonActivite.addProperty("nb_participants", de.getDemandeAboutie().getListSize());
-            
+                jsonActivite.addProperty("payant", de.estPayant());
                 jsonListe.add(jsonActivite);
             }
         }
@@ -60,13 +59,12 @@ public class ListeAdminAction extends Action{
             
             for (Evenement de : le) {
                 if(de.getId() == id){
-                    System.out.println("test");
             
                         jsonActivite.addProperty("id", de.getId());
                         jsonActivite.addProperty("denomination", de.getDemandeAboutie().getActivity().getDenomination());
                         jsonActivite.addProperty("date", de.getDemandeAboutie().getDate().toString());
                         jsonActivite.addProperty("moment", de.getDemandeAboutie().getDay_moment().toString());
-                        jsonActivite.addProperty("tarif", de.getDemandeAboutie().getActivity().getPayant());
+                        jsonActivite.addProperty("payant", de.estPayant());
                         jsonActivite.addProperty("nb_participants", de.getDemandeAboutie().getListSize());
             
                         jsonListe.add(jsonActivite);
@@ -83,7 +81,6 @@ public class ListeAdminAction extends Action{
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String json = gson.toJson(container);
         
-        JpaUtil.destroy();
         
         return json;
     }

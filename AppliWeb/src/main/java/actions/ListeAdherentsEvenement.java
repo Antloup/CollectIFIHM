@@ -24,7 +24,6 @@ public class ListeAdherentsEvenement extends Action{
 
     @Override
     public String execute(HttpServletRequest request) {
-        JpaUtil.init();
         ServiceMetier sm = new ServiceMetier();
         List<Evenement> le = sm.obtenirEvenementAValider(); // TODO : a modifier, ca doit etre le commande complete.
         List<Adherent> la = null;
@@ -67,8 +66,6 @@ public class ListeAdherentsEvenement extends Action{
         //Serialisation & Ecriture sur le flux de sortie
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String json = gson.toJson(container);
-        
-        JpaUtil.destroy();
         
         return json;
     }

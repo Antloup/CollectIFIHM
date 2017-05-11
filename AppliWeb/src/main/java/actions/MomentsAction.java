@@ -24,7 +24,6 @@ public class MomentsAction extends Action{
     @Override
     public String execute(HttpServletRequest request) {
         ServiceMetier sm = new ServiceMetier();
-        JpaUtil.init();
         
         List<Moment> lm = sm.obtenirMoments();
         
@@ -53,8 +52,6 @@ public class MomentsAction extends Action{
         //Serialisation & Ecriture sur le flux de sortie
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String json = gson.toJson(container);
-        
-        JpaUtil.destroy();
         
         return json;
     }

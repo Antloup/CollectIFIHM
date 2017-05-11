@@ -26,7 +26,6 @@ public class ListeEvenementsAction extends Action{
 
     @Override
     public String execute(HttpServletRequest request) {
-        JpaUtil.init();
         ServiceMetier sm = new ServiceMetier();
         List<DemandeEvenement> le = sm.obtenirDemandesFuturesNonComplet(); // TODO : a modifier, ca doit etre le commande complete.
         
@@ -50,6 +49,7 @@ public class ListeEvenementsAction extends Action{
             jsonActivite.addProperty("tarif", de.getActivity().getPayant());
             jsonActivite.addProperty("nb_participants", de.getListSize());
             jsonActivite.addProperty("nb_max", de.getActivity().getNbParticipants());
+            jsonActivite.addProperty("payant", de.getActivity().getPayant());
             
             jsonListe.add(jsonActivite);
         }
@@ -61,8 +61,6 @@ public class ListeEvenementsAction extends Action{
         //Serialisation & Ecriture sur le flux de sortie
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String json = gson.toJson(container);
-        
-        JpaUtil.destroy();
         
         return json;
         

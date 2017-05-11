@@ -27,7 +27,7 @@ public class HistoriqueAction extends Action{
     @Override
     public String execute(HttpServletRequest request) {
         ServiceMetier sm = new ServiceMetier();
-        JpaUtil.init();
+
         HttpSession session = request.getSession();
         Adherent adherent = sm.connexion((String)session.getAttribute("Email"));
         List<DemandeEvenement> lde = sm.obtenirDemandesPerso(adherent, false);
@@ -43,6 +43,8 @@ public class HistoriqueAction extends Action{
             jsonActivite.addProperty("moment", de.getDay_moment().toString());
             jsonActivite.addProperty("tarif", de.getActivity().getPayant());
             jsonActivite.addProperty("nb_participants", de.getListSize());
+            jsonActivite.addProperty("nb_max", de.getActivity().getNbParticipants());
+            jsonActivite.addProperty("payant", de.getActivity().getPayant());
             if(de.getEvent() != null){
                 jsonActivite.addProperty("etat", de.getEvent().isValidated());
             }
@@ -59,7 +61,7 @@ public class HistoriqueAction extends Action{
         //Serialisation & Ecriture sur le flux de sortie
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String json = gson.toJson(container);
-        JpaUtil.destroy();
+
         return json;
     }
     

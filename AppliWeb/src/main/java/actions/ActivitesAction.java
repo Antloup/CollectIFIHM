@@ -25,11 +25,7 @@ public class ActivitesAction extends Action {
     @Override
     public String execute(HttpServletRequest request) {
 
-        JpaUtil.init();
         ServiceMetier sm = new ServiceMetier();
-        
-        
-        
         
         List<Activite> la = null;
         if(sm !=null){
@@ -59,8 +55,6 @@ public class ActivitesAction extends Action {
         //Serialisation & Ecriture sur le flux de sortie
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String json = gson.toJson(container);
-
-        JpaUtil.destroy();
 
         return json;
 

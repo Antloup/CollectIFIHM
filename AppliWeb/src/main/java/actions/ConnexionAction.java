@@ -24,7 +24,6 @@ public class ConnexionAction extends Action{
     public String execute(HttpServletRequest request) {
         
         ServiceMetier sm = new ServiceMetier();
-        JpaUtil.init();
         Adherent adherent = sm.connexion(request.getParameter("email"));
         
         JsonObject jsonResponse = new JsonObject();
@@ -41,7 +40,6 @@ public class ConnexionAction extends Action{
         //Serialisation & Ecriture sur le flux de sortie
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String json = gson.toJson(jsonResponse);
-        JpaUtil.destroy();
         return json;
     }
     

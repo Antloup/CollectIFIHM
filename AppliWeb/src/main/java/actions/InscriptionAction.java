@@ -24,7 +24,6 @@ public class InscriptionAction extends Action{
     @Override
     public String execute(HttpServletRequest request) {
         ServiceMetier sm = new ServiceMetier();
-        JpaUtil.init();
         Adherent adherent = new Adherent(request.getParameter("nom"), request.getParameter("prenom"), request.getParameter("email"), request.getParameter("adresse"));
         Adherent result = sm.inscription(adherent);
         JsonObject jsonResponse = new JsonObject();
@@ -42,7 +41,6 @@ public class InscriptionAction extends Action{
         //Serialisation & Ecriture sur le flux de sortie
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String json = gson.toJson(jsonResponse);
-        JpaUtil.destroy();
         return json;
     }
     
