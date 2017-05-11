@@ -11,9 +11,12 @@ import actions.ConnexionAction;
 import actions.HistoriqueAction;
 import actions.InscriptionAction;
 import actions.InsertDemandeAction;
+import actions.ListeAdherentsEvenement;
 import actions.ListeAdminAction;
 import actions.ListeEvenementsAction;
+import actions.ListeLieuxAction;
 import actions.MomentsAction;
+import dao.JpaUtil;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
@@ -29,6 +32,20 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "ActionServlet", urlPatterns = {"/ActionServlet"})
 public class ActionServlet extends HttpServlet {
+
+    @Override
+    public void init() throws ServletException {
+        super.init(); //To change body of generated methods, choose Tools | Templates.
+        JpaUtil.init();
+    }
+
+    @Override
+    public void destroy() {
+        JpaUtil.destroy();
+        super.destroy(); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -83,6 +100,16 @@ public class ActionServlet extends HttpServlet {
 
                 case "getListeAdmin": {
                     action = new ListeAdminAction();
+                    break;
+                }
+                
+                case "getListeLieux":{
+                    action = new ListeLieuxAction();
+                    break;
+                }
+                
+                case "getListeAdherentsEvenement":{
+                    action = new ListeAdherentsEvenement();
                     break;
                 }
 
