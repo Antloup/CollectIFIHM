@@ -38,7 +38,7 @@ public class ListeEvenementsAction extends Action{
         }
         
         JsonArray jsonListe = new JsonArray();
-        
+       
         for (DemandeEvenement de : le) {
             
             JsonObject jsonActivite = new JsonObject();

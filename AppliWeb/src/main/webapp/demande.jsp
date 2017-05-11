@@ -61,7 +61,7 @@
         
         <script>
             $("#demande").click(function() {
-                console.log("Envoie d'une demande");
+                console.log("Envoi d'une demande");
                 console.log( $("#select-activite").val());
                 console.log( $("#select-moment").val());
                 console.log( $("#date").val());

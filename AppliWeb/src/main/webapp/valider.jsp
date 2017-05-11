@@ -54,6 +54,27 @@
         <script>
             $(document).ready(function () {
                 $('select').material_select();
+                var id = getUrlParameter('id');
+                console.log(id);
+                $.ajax({
+                    url: "./ActionServlet",
+                    type: "POST",
+                    data: {
+                        action: "getListeAdmin",
+                        id: id
+                    },
+                    dataType: "json"
+                })
+                        .done(function (data) {
+                            console.log(data);
+                        })
+                        .fail(function () {
+                            $("#nom").html("ERREUR");
+                            console.log("fail");
+                        })
+                        .always(function () {
+                            console.log("always");
+                        });
             });
         </script>
 

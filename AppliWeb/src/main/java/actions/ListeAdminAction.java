@@ -51,6 +51,48 @@ public class ListeAdminAction extends Action{
             jsonListe.add(jsonActivite);
         }
         
+        int id = -1;
+        if(request.getParameter("id") != null)
+            id = Integer.parseInt(request.getParameter("id"));
+        
+        System.out.println(id);
+        System.out.println("test");
+        
+        if(id == -1){
+            System.out.println("if");
+            for (Evenement de : le) {
+            
+                JsonObject jsonActivite = new JsonObject();
+            
+                jsonActivite.addProperty("id", de.getId());
+                jsonActivite.addProperty("denomination", de.getDemandeAboutie().getActivity().getDenomination());
+                jsonActivite.addProperty("date", de.getDemandeAboutie().getDate().toString());
+                jsonActivite.addProperty("moment", de.getDemandeAboutie().getDay_moment().toString());
+                jsonActivite.addProperty("tarif", de.getDemandeAboutie().getActivity().getPayant());
+                jsonActivite.addProperty("nb_participants", de.getDemandeAboutie().getListSize());
+            
+                jsonListe.add(jsonActivite);
+            }
+        }
+        else {
+            JsonObject jsonActivite = new JsonObject();
+            
+            for (Evenement de : le) {
+                if(de.getId() == id){
+            
+                        jsonActivite.addProperty("id", de.getId());
+                        jsonActivite.addProperty("denomination", de.getDemandeAboutie().getActivity().getDenomination());
+                        jsonActivite.addProperty("date", de.getDemandeAboutie().getDate().toString());
+                        jsonActivite.addProperty("moment", de.getDemandeAboutie().getDay_moment().toString());
+                        jsonActivite.addProperty("tarif", de.getDemandeAboutie().getActivity().getPayant());
+                        jsonActivite.addProperty("nb_participants", de.getDemandeAboutie().getListSize());
+            
+                        jsonListe.add(jsonActivite);
+                        break;
+                }
+            }
+        }
+        
         //Objet JSON "conteneur"
         JsonObject container = new JsonObject();
         container.add("activites", jsonListe);

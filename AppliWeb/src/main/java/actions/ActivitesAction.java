@@ -42,7 +42,7 @@ public class ActivitesAction extends Action {
         }
 
         JsonArray jsonListe = new JsonArray();
-
+        
         for (Activite act : la) {
             JsonObject jsonActivite = new JsonObject();
 
