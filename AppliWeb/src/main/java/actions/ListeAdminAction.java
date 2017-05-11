@@ -52,16 +52,11 @@ public class ListeAdminAction extends Action{
         }
         
         int id = -1;
-        if(request.getParameter("id") != null)
+        if(request.getParameter("id") != "")
             id = Integer.parseInt(request.getParameter("id"));
         
-        System.out.println(id);
-        System.out.println("test");
-        
         if(id == -1){
-            System.out.println("if");
             for (Evenement de : le) {
-            
                 JsonObject jsonActivite = new JsonObject();
             
                 jsonActivite.addProperty("id", de.getId());

@@ -48,10 +48,6 @@ public class ActionServlet extends HttpServlet {
             switch (todo) {
                 case "getListeEvenements": {
                     action = new ListeEvenementsAction();
-                    //this.getServletContext().getRequestDispatcher("/AccueilUtilisateurs.html").forward(request, response);
-//                RequestDispatcher rd = request.getRequestDispatcher("/ServletVueEtudiant");
-//                rd.forward(request, response);
-                    //response.setContentType("text/html;charset=UTF-8");
                     break;
                 }
 
