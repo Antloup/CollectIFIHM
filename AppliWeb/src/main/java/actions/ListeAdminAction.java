@@ -37,20 +37,6 @@ public class ListeAdminAction extends Action{
         
         JsonArray jsonListe = new JsonArray();
         
-        for (Evenement de : le) {
-            
-            JsonObject jsonActivite = new JsonObject();
-            
-            jsonActivite.addProperty("id", de.getId());
-            jsonActivite.addProperty("denomination", de.getDemandeAboutie().getActivity().getDenomination());
-            jsonActivite.addProperty("date", de.getDemandeAboutie().getDate().toString());
-            jsonActivite.addProperty("moment", de.getDemandeAboutie().getDay_moment().toString());
-            jsonActivite.addProperty("tarif", de.getDemandeAboutie().getActivity().getPayant());
-            jsonActivite.addProperty("nb_participants", de.getDemandeAboutie().getListSize());
-            
-            jsonListe.add(jsonActivite);
-        }
-        
         int id = -1;
         if(request.getParameter("id") != "")
             id = Integer.parseInt(request.getParameter("id"));
@@ -74,6 +60,7 @@ public class ListeAdminAction extends Action{
             
             for (Evenement de : le) {
                 if(de.getId() == id){
+                    System.out.println("test");
             
                         jsonActivite.addProperty("id", de.getId());
                         jsonActivite.addProperty("denomination", de.getDemandeAboutie().getActivity().getDenomination());
