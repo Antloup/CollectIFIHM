@@ -6,7 +6,7 @@
     </jsp:attribute>
     <jsp:attribute name="body_area">
         <div class="row center-align">
-            <h2>Valider un évènement :</h2>
+            <h2>Valider un événement :</h2>
         </div>
         <div class="row">
             <div class="col s6">

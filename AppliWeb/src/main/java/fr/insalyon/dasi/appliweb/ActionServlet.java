@@ -11,6 +11,7 @@ import actions.ConnexionAction;
 import actions.HistoriqueAction;
 import actions.InscriptionAction;
 import actions.InsertDemandeAction;
+import actions.ListeAdminAction;
 import actions.ListeEvenementsAction;
 import actions.MomentsAction;
 import java.io.IOException;
@@ -84,7 +85,8 @@ public class ActionServlet extends HttpServlet {
                     break;
                 }
 
-                case "getListeDemandes": {
+                case "getListeAdmin": {
+                    action = new ListeAdminAction();
                     break;
                 }
 

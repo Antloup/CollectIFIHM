@@ -40,7 +40,7 @@
                     url: "./ActionServlet",
                     type: "POST",
                     data: {
-                        action: "getListeDemandes",
+                        action: "getListeAdmin",
                         id: window.location.search.substring(1) // URL.html?<id>
                     },
                     dataType: "json"
