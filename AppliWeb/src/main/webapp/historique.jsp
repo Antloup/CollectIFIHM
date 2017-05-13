@@ -17,9 +17,9 @@
                     <div class="nav-wrapper">
                         <form>
                             <div class="input-field">
-                                <input id="search" type="search" required>
-                                <label class="label-icon" for="search"><i class="material-icons">search</i></label>
-                                <i class="material-icons">close</i>
+                                <input id="search" type="search" required class="autocomplete">
+                                <label class="label-icon" for="search"><i class="material-icons" onclick="search();">search</i></label>
+                                <i class="material-icons" >close</i>
                             </div>
                         </form>
                     </div>
@@ -68,7 +68,10 @@
                         action: "getHistorique",
                         id: window.location.search.substring(1) // URL.html?<id>
                     },
-                    dataType: "json"
+                    dataType: "json",
+                    success: function (data) {
+                        getActivite();
+                    }
                 })
                         .done(function (data) {
                             var recherche = getUrlParameter('search');
@@ -86,14 +89,20 @@
                                     listeEvenements.append("<td>" + activite.denomination + "</td>");
                                     listeEvenements.append("<td>" + activite.date + "</td>");
                                     listeEvenements.append("<td>" + activite.moment + "</td>");
-                                    var payant = activite.payant ? "Payant":"Gratuit";
+                                    var payant = activite.payant ? "Payant" : "Gratuit";
                                     listeEvenements.append("<td>" + payant + "</td>");
                                     listeEvenements.append("<td>" + activite.nb_participants + "/" + activite.nb_max + "</td>");
-                                    var etat;
-                                    if(activite.etat==false)    etat = "En cours de validation";
-                                    else if(activite.etat=="NULL")    etat = "-";
-                                    else etat = "validé";
-                                    listeEvenements.append("<td>" + etat + "</td>");
+                                    if (activite.etat == false){
+                                        url = "'popup.jsp?id="+activite.id+"'";
+                                        listeEvenements.append("<td> <a href=\"javascript:ouvre_popup("+url+")\">" + "En cours de validation" + "</a></td>");
+                                    }
+                                    else if (activite.etat == "NULL"){
+                                        listeEvenements.append("<td>-</td>");
+                                    }
+                                    else{
+                                        url = "'popup.jsp?id="+activite.id+"'";
+                                        listeEvenements.append("<td> <a href=\"javascript:ouvre_popup("+url+")\">" + "Validé" + "</a></td>");
+                                    }
                                     listeEvenements.append("</tr>");
                                 }
                             })
@@ -110,6 +119,54 @@
                             console.log("always");
                         });
             });
+        </script>
+        
+        <script>
+            function getActivite(){
+                // getActivites
+                $.ajax({
+                    url: "./ActionServlet",
+                    type: "POST",
+                    data: {
+                        action: "getActivites"
+                    },
+                    dataType: "json"
+                })
+                        .done(function (data) {
+
+                            console.log(data);
+                            var activites = data.activites;
+                            console.log(activites);
+                            var dateActivite = {};
+                            $.each(activites, function (i, activite) {
+                                dateActivite[activite.denomination] = null;
+                            })
+                            console.log("done");
+                            $('input.autocomplete').autocomplete({
+                                data: dateActivite,
+                                limit: 5, // The max amount of results that can be shown at once. Default: Infinity.
+                                onAutocomplete: function (val) {
+                                    search();
+                                },
+                                minLength: 1, // The minimum length of the input for the autocomplete to start. Default: 1.
+                            });
+                            console.log($('input.autocomplete').data);
+                        })
+                        .fail(function () {
+                            console.log("fail");
+                        })
+                        .always(function () {
+                            console.log("always");
+                        });
+            }
+
+        </script>
+
+        
+        <script language="javascript">
+            function ouvre_popup(page) {
+                window.open(page, "Infos", "width=500,height=700");
+            }
         </script>
     </jsp:attribute>
 

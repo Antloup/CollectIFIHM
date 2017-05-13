@@ -22,7 +22,7 @@
                 <div class="row" id="payant">
                     <div class="col s6"><p class="right-align">Fixer un prix :</p></div>
                     <div class="col s6">
-                        <input placeholder="10" id="prix" type="number" class="validate">
+                        <input placeholder="0" value="0" id="prix" type="number" class="validate" required>
                         <label for="prix"></label>
                     </div>
 
@@ -61,7 +61,7 @@
         </div>
         <div class="row">
             <div class="row center-align">
-                <button class="btn waves-effect waves-light" id="valider">Valider l'évènement</button>
+                <button class="btn waves-effect waves-light" id="valider" onclick="valider();">Valider l'évènement</button>
             </div>
         </div>
 
@@ -87,6 +87,7 @@
                             var activite = data.activites[0];
                             if (!activite.payant) { // On enlève le prix
                                 $("#payant").addClass("hide");
+                                $("#payant").val(-1);
                             }
                             $("#denomination").html(activite.denomination);
                             $("#date").html(activite.date);
@@ -133,7 +134,7 @@
                                     icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
                                 });
                                 marker.addListener('click', function () {
-                                    selectMarker(marker.title,true);
+                                    selectMarker(marker.title, true);
                                 });
 
                                 $lieuxMarkers.push(marker);
@@ -210,7 +211,7 @@
                                     $("#select-lieux").val(id);
                                     $('#select-lieux').material_select();
                                 }
-                                console.log($(this).val());
+                                //console.log($(this).val());
                             });
                         }
 
@@ -218,13 +219,52 @@
                 })
             }
         </script>
-        
+
         <script>
-            function changeMarker(){
+            function changeMarker() {
                 var lieu = $("#select-lieux option:selected").text();
                 console.log(lieu);
-                selectMarker(lieu,false);
-                
+                selectMarker(lieu, false);
+
+            }
+        </script>
+
+        <script>
+            function valider() {
+                var prix = $("#prix").val();
+                var lieu = $("#select-lieux").val();
+                var id = getUrlParameter("id");
+                console.log(prix);
+                console.log(lieu);
+                console.log(id);
+
+                $.ajax({
+                    url: "./ActionServlet",
+                    type: "POST",
+                    data: {
+                        action: "valider",
+                        id: id,
+                        prix: prix,
+                        lieu: lieu
+                    },
+                    dataType: "json"
+                })
+                        .done(function (data) {
+                            if (data.Validation == "OK") {
+                                console.log("Validation OK");
+                                window.location.href = "admin.jsp";
+                            } else {
+                                console.log("Erreur Validation");
+                                Materialize.toast('Erreur Validation', 4000);
+                            }
+                        })
+                        .fail(function () {
+                            $("#nom").html("ERREUR");
+                            console.log("fail");
+                        })
+                        .always(function () {
+                            console.log("always");
+                        });
             }
         </script>
 
@@ -237,6 +277,8 @@
                 });
             }
         </script>
+
+
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAhf3JleYpal9S-xouJYH8lf7Dvz5Y2Nko&callback=initMap"
         async defer></script>
 
