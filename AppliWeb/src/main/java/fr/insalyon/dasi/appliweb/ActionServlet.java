@@ -8,6 +8,7 @@ package fr.insalyon.dasi.appliweb;
 import actions.Action;
 import actions.ActivitesAction;
 import actions.ConnexionAction;
+import actions.DetailsAction;
 import actions.HistoriqueAction;
 import actions.InscriptionAction;
 import actions.InsertDemandeAction;
@@ -16,6 +17,7 @@ import actions.ListeAdminAction;
 import actions.ListeEvenementsAction;
 import actions.ListeLieuxAction;
 import actions.MomentsAction;
+import actions.ValiderAction;
 import dao.JpaUtil;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -110,6 +112,16 @@ public class ActionServlet extends HttpServlet {
                 
                 case "getListeAdherentsEvenement":{
                     action = new ListeAdherentsEvenement();
+                    break;
+                }
+                
+                case "valider":{
+                    action = new ValiderAction();
+                    break;
+                }
+                
+                case "getDetails":{
+                    action = new DetailsAction();
                     break;
                 }
 
