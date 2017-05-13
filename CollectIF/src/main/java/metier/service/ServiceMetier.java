@@ -159,6 +159,27 @@ public class ServiceMetier {
         }
         return r;
     }
+    
+    //RAJOUTEE
+    public Evenement obtenirEvenement(DemandeEvenement de){
+        EvenementDAO mon_evenement_dao = new EvenementDAO();
+        List<Evenement> r = null;
+        Evenement event = null;
+        try {
+            JpaUtil.creerEntityManager();
+            r = mon_evenement_dao.findAll();
+            for(Evenement e : r){
+                if(e.getDemandeAboutie().getId() == de.getId()){
+                    event = e;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            JpaUtil.fermerEntityManager();
+        }
+        return event;
+    }
 
     public DemandeEvenement nouvelleDemandeEvenement(Date date, Moment day_moment, Activite activity, Adherent user) {
         DemandeEvenementDAO ma_demande_evenement_dao = new DemandeEvenementDAO();
@@ -169,7 +190,7 @@ public class ServiceMetier {
             JpaUtil.ouvrirTransaction();
             demandeEnCours = ma_demande_evenement_dao.findSimilarNotComplete(date, day_moment, activity);
 
-            //Saisie.pause();
+            Saisie.pause();
             if (demandeEnCours != null) {
                 demandeEnCours.ajoutAdherent(user);
                 ma_demande_evenement_dao.updateDemandeEvenement(demandeEnCours);
@@ -270,6 +291,10 @@ public class ServiceMetier {
             JpaUtil.fermerEntityManager();
         }
         return r;
+    }
+
+    public Evenement validerEvenement(DemandeEvenement de, Lieu lieu) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }
