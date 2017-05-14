@@ -61,6 +61,13 @@
         
         <script>
             $("#demande").click(function() {
+                if($("#select-moment").val() == 0){
+                    $("#date").val($("#date").val()+" 08:00:00");
+                } else if ($("#select-moment").val() == 2){
+                    $("#date").val($("#date").val()+" 20:00:00");
+                } else {
+                    $("#date").val($("#date").val()+" 16:00:00");
+                }
                 console.log("Envoi d'une demande");
                 console.log( $("#select-activite").val());
                 console.log( $("#select-moment").val());

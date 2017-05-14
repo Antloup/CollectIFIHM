@@ -190,7 +190,6 @@ public class ServiceMetier {
             JpaUtil.ouvrirTransaction();
             demandeEnCours = ma_demande_evenement_dao.findSimilarNotComplete(date, day_moment, activity);
 
-            Saisie.pause();
             if (demandeEnCours != null) {
                 demandeEnCours.ajoutAdherent(user);
                 ma_demande_evenement_dao.updateDemandeEvenement(demandeEnCours);
